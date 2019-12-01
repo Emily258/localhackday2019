@@ -1,19 +1,17 @@
-from flask import Flask 
-app = Flask(__name__)
+from flask import Flask, request, render_template
 
-@app.route('/vegetarian', methods=["GET"])
-def vegetarian(): 
-    return "Vegetarian"
+app = Flask(__name__, template_folder='template')
 
-@app.route('/vegan', methods=["GET"])
-def vegan(): 
-    return "Vegan"
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-@app.route('/celiac', methods=["GET"])
-def celiac(): 
-    return "Celiac"
+@app.route('/diet', methods=['GET'])
+def diet():
+    vegetarian = request.args.get('Vegetarian')
+    
+    if (vegetarian is not ''):
+        return render_template('vegetarian.html')
 
 if __name__ == '__main__':
     app.run()
-
-    
